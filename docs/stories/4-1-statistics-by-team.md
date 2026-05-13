@@ -1,6 +1,6 @@
 # Story 4.1: Statistics by Team
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -19,11 +19,11 @@ so that I can understand which teams have the most violations and outstanding pa
 
 ## Tasks / Subtasks
 
-- [ ] Add `report_team_stats()` in `src/report.c`
-- [ ] Aggregate collected and unpaid fines by team using member-team mapping
-- [ ] Print a stable terminal table with one row per team and a total column
-- [ ] Handle teams with zero violations without skipping rows
-- [ ] Keep the feature read-only and consistent with report-module responsibilities
+- [x] Add `report_team_stats()` in `src/report.c`
+- [x] Aggregate collected and unpaid fines by team using member-team mapping
+- [x] Print a stable terminal table with one row per team and a total column
+- [x] Handle teams with zero violations without skipping rows
+- [x] Keep the feature read-only and consistent with report-module responsibilities
 
 ## Dev Notes
 
@@ -46,7 +46,13 @@ gpt-5
 ### Completion Notes List
 
 - Story prepared with team-level collected/outstanding aggregation and stable terminal table output
+- Confirmed `reportTeamStats()` aggregates collected and outstanding fines by member team
+- Confirmed the output prints one row for each defined team, including zero-value teams
+- Confirmed the feature is read-only and already wired to BCN menu option 7
 
 ### File List
 
-- `docs/stories/4-1-statistics-by-team.md`
+- `_bmad-output/implementation-artifacts/4-1-statistics-by-team.md`
+- `include/report.h`
+- `src/main.c`
+- `src/report.c`
