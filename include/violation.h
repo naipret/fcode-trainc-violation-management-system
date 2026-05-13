@@ -3,10 +3,11 @@
 
 /**
  * @file violation.h
- * @brief Violation management module - Stories 3.1, 3.2, and 3.3.
+ * @brief Violation management module - Stories 3.1, 3.2, 3.3, and 3.4.
  *
  * Handles recording violations, penalty calculation, threshold checks,
- * member self-service views, and admin payment marking.
+ * member self-service views, admin payment marking, and filtered
+ * admin reporting views.
  */
 
 #include "types.h"
@@ -31,5 +32,11 @@ void violationCheckAllOutClb(AppDatabase *db);
 void violationViewOwn(AppDatabase *db);
 void violationViewFines(AppDatabase *db);
 int violationMarkPaid(AppDatabase *db);
+
+/* ============================================================
+ * Story 3.4 - View All Violations with Filters
+ * ============================================================ */
+
+void violationViewAllFiltered(AppDatabase *db);
 
 #endif /* VIOLATION_H */

@@ -1,6 +1,6 @@
 # Story 3.4: View All Violations with Filters
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,11 +22,11 @@ so that I can analyze violations by team, reason, or payment status.
 
 ## Tasks / Subtasks
 
-- [ ] Add the BCN view-all-violations entry point and filter sub-menu
-- [ ] Implement filter predicates for team, reason, and payment status
-- [ ] Display each violation with member context and payment state
-- [ ] Handle empty results cleanly without crashing or printing stale rows
-- [ ] Keep the feature read-only and avoid mutating violation order during display
+- [x] Add the BCN view-all-violations entry point and filter sub-menu
+- [x] Implement filter predicates for team, reason, and payment status
+- [x] Display each violation with member context and payment state
+- [x] Handle empty results cleanly without crashing or printing stale rows
+- [x] Keep the feature read-only and avoid mutating violation order during display
 
 ## Dev Notes
 
@@ -50,7 +50,14 @@ gpt-5
 ### Completion Notes List
 
 - Story prepared with BCN-only filtered read access over the full violation dataset
+- Wired BCN menu option 6 to the new filtered violation view
+- Added filter modes for all violations, team, reason, and payment status
+- Displayed each matching violation with member context, payment state, and formatted timestamp
+- Kept the feature read-only over in-memory data with no file writes
 
 ### File List
 
-- `docs/stories/3-4-view-all-violations-with-filters.md`
+- `_bmad-output/implementation-artifacts/3-4-view-all-violations-with-filters.md`
+- `include/violation.h`
+- `src/main.c`
+- `src/violation.c`
