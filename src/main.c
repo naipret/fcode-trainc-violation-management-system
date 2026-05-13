@@ -112,7 +112,7 @@ static void adminMenu(void) {
       violationMarkPaid(&gDb);
       break;
     case 6:
-      printf("[CANH BAO] Chua cai dat\n");
+      violationViewAllFiltered(&gDb);
       break;
     case 7:
       reportTeamStats(&gDb);
