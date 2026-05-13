@@ -1,6 +1,6 @@
 # Story 4.2: Sort Members by Violation Count
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,12 +22,12 @@ so that I can identify the most or least problematic members.
 
 ## Tasks / Subtasks
 
-- [ ] Add the sort-by-violations report entry point in `src/report.c`
-- [ ] Build a pointer-array copy of members before sorting
-- [ ] Implement ascending and descending ordering without `qsort`
-- [ ] Count each member's violations accurately from current violation data
-- [ ] Display sorted rows with name, MSSV, team, and violation count
-- [ ] Verify the source `members[]` order is untouched after the report finishes
+- [x] Add the sort-by-violations report entry point in `src/report.c`
+- [x] Build a pointer-array copy of members before sorting
+- [x] Implement ascending and descending ordering without `qsort`
+- [x] Count each member's violations accurately from current violation data
+- [x] Display sorted rows with name, MSSV, team, and violation count
+- [x] Verify the source `members[]` order is untouched after the report finishes
 
 ## Dev Notes
 
@@ -51,7 +51,14 @@ gpt-5
 ### Completion Notes List
 
 - Story prepared with the non-`qsort`, pointer-copy sorting constraint and report-only behavior
+- Wired BCN menu option 9 to the report sorting flow
+- Built the required `Member*` pointer-copy approach before sorting
+- Implemented manual selection sort for ascending and descending order
+- Counted violations from current in-memory violation data while leaving `members[]` order untouched
 
 ### File List
 
-- `docs/stories/4-2-sort-members-by-violation-count.md`
+- `_bmad-output/implementation-artifacts/4-2-sort-members-by-violation-count.md`
+- `include/report.h`
+- `src/main.c`
+- `src/report.c`
