@@ -43,8 +43,10 @@ static void memberMenu(void) {
       memberViewProfile(&gDb);
       break;
     case 2:
+      violationViewOwn(&gDb);
+      break;
     case 3:
-      printf("[CANH BAO] Chua cai dat\n");
+      violationViewFines(&gDb);
       break;
     case 4:
       memberListAll(&gDb);
@@ -107,6 +109,8 @@ static void adminMenu(void) {
       violationRecord(&gDb);
       break;
     case 5:
+      violationMarkPaid(&gDb);
+      break;
     case 6:
       printf("[CANH BAO] Chua cai dat\n");
       break;
