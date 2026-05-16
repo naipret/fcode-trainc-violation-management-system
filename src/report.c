@@ -53,12 +53,10 @@ static void swapMemberPointers(const Member **a, const Member **b) {
 
 static void sortMemberPointersByViolationCount(const AppDatabase *db,
                                                const Member *sorted[],
-                                               int memberCount,
-                                               int ascending) {
+                                               int memberCount, int ascending) {
   for (int i = 0; i < memberCount - 1; i++) {
     int selected = i;
-    int selectedCount =
-        countMemberViolations(db, sorted[selected]->studentId);
+    int selectedCount = countMemberViolations(db, sorted[selected]->studentId);
 
     for (int j = i + 1; j < memberCount; j++) {
       int currentCount = countMemberViolations(db, sorted[j]->studentId);
@@ -148,18 +146,21 @@ void reportSortMembersByViolations(const AppDatabase *db) {
   sortMemberPointersByViolationCount(db, sorted, db->memberCount, choice == 1);
 
   printf("\nDANH SACH THANH VIEN THEO SO LAN VI PHAM\n");
-  printf("+----------------------+------------+--------------+--------------+\n");
-  printf("| Ho va ten            | MSSV       | Ban          | So vi pham   |\n");
-  printf("+----------------------+------------+--------------+--------------+\n");
+  printf(
+      "+----------------------+------------+--------------+--------------+\n");
+  printf(
+      "| Ho va ten            | MSSV       | Ban          | So vi pham   |\n");
+  printf(
+      "+----------------------+------------+--------------+--------------+\n");
 
   for (int i = 0; i < db->memberCount; i++) {
     int violationCount = countMemberViolations(db, sorted[i]->studentId);
-    printf("| %-20.20s | %-10.10s | %-12.12s | %-12d |\n",
-           sorted[i]->fullName, sorted[i]->studentId, teamName(sorted[i]->team),
-           violationCount);
+    printf("| %-20.20s | %-10.10s | %-12.12s | %-12d |\n", sorted[i]->fullName,
+           sorted[i]->studentId, teamName(sorted[i]->team), violationCount);
   }
 
-  printf("+----------------------+------------+--------------+--------------+\n");
+  printf(
+      "+----------------------+------------+--------------+--------------+\n");
   printf("Tong: %d thanh vien\n", db->memberCount);
 }
 
@@ -211,7 +212,8 @@ void reportExportTxt(const AppDatabase *db) {
   fprintf(fp, "TONG HOP THEO BAN\n");
   fprintf(fp, "%-15s | %-15s | %-15s | %-15s\n", "Ban", "Da thu (VND)",
           "Con no (VND)", "Tong (VND)");
-  fprintf(fp, "-----------------------------------------------------------------------\n");
+  fprintf(fp, "----------------------------------------------------------------"
+              "-------\n");
   for (int team = TEAM_ACADEMIC; team <= TEAM_MEDIA; team++) {
     double total = collected[team] + outstanding[team];
     fprintf(fp, "%-15s | %15.0f | %15.0f | %15.0f\n", teamName(team),

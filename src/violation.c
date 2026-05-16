@@ -101,9 +101,12 @@ static const char *paymentStatusName(const Violation *v) {
 
 static void printViolationTableHeader(void) {
   printf("\nDANH SACH VI PHAM\n");
-  printf("+------------+----------------------+--------------+----------------------+------------------+------------+------------+\n");
-  printf("| MSSV       | Ho va ten            | Ban          | Ly do                | Thoi gian        | Tien phat  | Trang thai |\n");
-  printf("+------------+----------------------+--------------+----------------------+------------------+------------+------------+\n");
+  printf("+------------+----------------------+--------------+-----------------"
+         "-----+------------------+------------+------------+\n");
+  printf("| MSSV       | Ho va ten            | Ban          | Ly do           "
+         "     | Thoi gian        | Tien phat  | Trang thai |\n");
+  printf("+------------+----------------------+--------------+-----------------"
+         "-----+------------------+------------+------------+\n");
 }
 
 static void printViolationRow(const Member *member, const Violation *v) {
@@ -117,7 +120,8 @@ static void printViolationRow(const Member *member, const Violation *v) {
     team = teamName(member->team);
   }
 
-  printf("| %-10.10s | %-20.20s | %-12.12s | %-20.20s | %-16s | %-10.0f | %-10.10s |\n",
+  printf("| %-10.10s | %-20.20s | %-12.12s | %-20.20s | %-16s | %-10.0f | "
+         "%-10.10s |\n",
          v->studentId, memberName, team, reasonName(v->reason), timeBuf,
          v->fine, paymentStatusName(v));
 }
@@ -170,7 +174,8 @@ static void displayViolationsByFilter(const AppDatabase *db, int filterType,
     }
   }
 
-  printf("+------------+----------------------+--------------+----------------------+------------------+------------+------------+\n");
+  printf("+------------+----------------------+--------------+-----------------"
+         "-----+------------------+------------+------------+\n");
   if (found == 0) {
     printf("Khong co vi pham nao\n");
   } else {
@@ -266,7 +271,8 @@ int violationRecord(AppDatabase *db) {
     db->violationCount = oldViolationCount;
     *member = oldMemberState;
     if (fileioSaveViolations(db) != 0) {
-      printf("[LOI] Khong the phuc hoi du lieu vi pham sau loi luu thanh vien.\n");
+      printf(
+          "[LOI] Khong the phuc hoi du lieu vi pham sau loi luu thanh vien.\n");
       return -1;
     }
     printf("[LOI] Khong the luu du lieu thanh vien\n");
@@ -386,9 +392,12 @@ void violationViewOwn(AppDatabase *db) {
   }
 
   printf("\n--- DANH SACH VI PHAM CUA BAN ---\n");
-  printf("+------------------+---------------------------+------------+---------------+\n");
-  printf("| Thoi gian        | Ly do                     | Tien phat  | Trang thai    |\n");
-  printf("+------------------+---------------------------+------------+---------------+\n");
+  printf("+------------------+---------------------------+------------+--------"
+         "-------+\n");
+  printf("| Thoi gian        | Ly do                     | Tien phat  | Trang "
+         "thai    |\n");
+  printf("+------------------+---------------------------+------------+--------"
+         "-------+\n");
 
   int found = 0;
   for (int i = 0; i < db->violationCount; i++) {
@@ -405,7 +414,8 @@ void violationViewOwn(AppDatabase *db) {
     }
   }
 
-  printf("+------------------+---------------------------+------------+---------------+\n");
+  printf("+------------------+---------------------------+------------+--------"
+         "-------+\n");
   if (found == 0) {
     printf("[THONG BAO] Ban khong co vi pham nao.\n");
   } else {
@@ -434,8 +444,8 @@ void violationViewFines(AppDatabase *db) {
         v->fine > 0) {
       char timeBuf[20];
       formatTime(v->violationTime, timeBuf, sizeof(timeBuf));
-      printf("%d. %s - %s: %.0f VND\n", ++found, timeBuf,
-             reasonName(v->reason), v->fine);
+      printf("%d. %s - %s: %.0f VND\n", ++found, timeBuf, reasonName(v->reason),
+             v->fine);
       total += v->fine;
     }
   }
@@ -533,7 +543,8 @@ int violationMarkPaid(AppDatabase *db) {
     db->violations[realIdx].isPaid = oldPaidState;
     m->totalFine = oldTotalFine;
     if (fileioSaveViolations(db) != 0) {
-      printf("[LOI] Khong the phuc hoi du lieu vi pham sau loi luu thanh vien.\n");
+      printf(
+          "[LOI] Khong the phuc hoi du lieu vi pham sau loi luu thanh vien.\n");
       return -1;
     }
     printf("[LOI] Khong the luu du lieu sau khi thu tien.\n");
@@ -601,7 +612,8 @@ void violationViewAllFiltered(AppDatabase *db) {
   }
   case 3: {
     int reason;
-    printf("Chon ly do (0-Khong mac ao CLB, 1-Vang hop, 2-Khong tham gia hoat dong, 3-Bao luc): ");
+    printf("Chon ly do (0-Khong mac ao CLB, 1-Vang hop, 2-Khong tham gia hoat "
+           "dong, 3-Bao luc): ");
     if (readInt(&reason) != 1 || reason < REASON_NO_JACKET ||
         reason > REASON_VIOLENCE) {
       printf("[LOI] Ly do vi pham khong hop le\n");
@@ -677,7 +689,8 @@ void violationSearchByDate(AppDatabase *db) {
     }
   }
 
-  printf("+------------+----------------------+--------------+----------------------+------------------+------------+------------+\n");
+  printf("+------------+----------------------+--------------+-----------------"
+         "-----+------------------+------------+------------+\n");
   if (found == 0) {
     printf("Khong co vi pham nao trong khoang ngay nay\n");
   } else {
