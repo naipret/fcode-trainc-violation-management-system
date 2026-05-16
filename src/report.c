@@ -172,7 +172,7 @@ void reportExportTxt(const AppDatabase *db) {
   double collected[4];
   double outstanding[4];
   char exeDir[512];
-  char filePath[1024];
+  char filePath[2048];
   char timestampForFile[32];
   char timestampDisplay[32];
   time_t now = time(NULL);
@@ -188,12 +188,22 @@ void reportExportTxt(const AppDatabase *db) {
   strftime(timestampDisplay, sizeof(timestampDisplay), "%d/%m/%Y %H:%M:%S",
            timeInfo);
 
+  char reportsDir[1024];
   getExeDir(exeDir, sizeof(exeDir));
+
 #ifdef _WIN32
-  snprintf(filePath, sizeof(filePath), "%s\\violation_report_%s.txt", exeDir,
-           timestampForFile);
+  snprintf(reportsDir, sizeof(reportsDir), "%s\\reports", exeDir);
 #else
-  snprintf(filePath, sizeof(filePath), "%s/violation_report_%s.txt", exeDir,
+  snprintf(reportsDir, sizeof(reportsDir), "%s/reports", exeDir);
+#endif
+
+  MKDIR(reportsDir);
+
+#ifdef _WIN32
+  snprintf(filePath, sizeof(filePath), "%s\\violation_report_%s.txt",
+           reportsDir, timestampForFile);
+#else
+  snprintf(filePath, sizeof(filePath), "%s/violation_report_%s.txt", reportsDir,
            timestampForFile);
 #endif
 
