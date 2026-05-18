@@ -18,6 +18,7 @@ Checks: >
   -readability-identifier-length,
   -readability-magic-numbers,
   -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,
+  -bugprone-easily-swappable-parameters,
 
 CheckOptions:
   # Constants should use UPPER_CASE
