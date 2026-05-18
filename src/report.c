@@ -34,6 +34,9 @@ static void aggregateTeamTotals(const AppDatabase *db, double collected[],
 }
 
 static int countMemberViolations(const AppDatabase *db, const char *studentId) {
+  if (db == NULL || studentId == NULL) {
+    return 0;
+  }
   int count = 0;
 
   for (int i = 0; i < db->violationCount; i++) {
@@ -55,10 +58,16 @@ static void sortMemberPointersByViolationCount(const AppDatabase *db,
                                                const Member *sorted[],
                                                int memberCount, int ascending) {
   for (int i = 0; i < memberCount - 1; i++) {
+    if (sorted[i] == NULL) {
+      continue;
+    }
     int selected = i;
     int selectedCount = countMemberViolations(db, sorted[selected]->studentId);
 
     for (int j = i + 1; j < memberCount; j++) {
+      if (sorted[j] == NULL) {
+        continue;
+      }
       int currentCount = countMemberViolations(db, sorted[j]->studentId);
       int shouldSelect = 0;
 
@@ -154,6 +163,9 @@ void reportSortMembersByViolations(const AppDatabase *db) {
       "+----------------------+------------+--------------+--------------+\n");
 
   for (int i = 0; i < db->memberCount; i++) {
+    if (sorted[i] == NULL) {
+      continue;
+    }
     int violationCount = countMemberViolations(db, sorted[i]->studentId);
     printf("| %-20.20s | %-10.10s | %-12.12s | %-12d |\n", sorted[i]->fullName,
            sorted[i]->studentId, teamName(sorted[i]->team), violationCount);
