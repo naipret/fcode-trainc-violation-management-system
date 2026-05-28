@@ -33,68 +33,47 @@ CFLAGS := -std=c17 -m64 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wformat=
 # Folders
 SRCDIR := src
 INCDIR := include
-BUILDDIR := build
 BINDIR := bin
-
-# Final program name
-TARGET := $(BINDIR)/violation-management-system
-TARGET_EXE := $(TARGET).exe
 
 # Find all .c files in src/
 SRCS := $(wildcard $(SRCDIR)/*.c)
 
 # Find all .h files in include/
-HDRS := $(wildcard $(INCDIR)/*.h)
+INCS := $(wildcard $(INCDIR)/*.h)
 
-# Change src/main.c -> build/main.o
-OBJS := $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(SRCS))
-
-# Files used for formatting
-FORMAT_FILES := $(strip $(SRCS) $(HDRS))
 
 # These are commands, not real files
-.PHONY: all clean format tidy
+.PHONY: all clean format tidy seed
 
 # Default command: build program
-all: $(TARGET)
+all: $(BINDIR)/violation-management-system.exe
 
-# Build final program from object files
-# gcc on Windows creates .exe, so we copy to remove the .exe extension
-# This keeps the program name consistent across platforms
-$(TARGET): $(TARGET_EXE)
-	copy /Y $(subst /,\,$(TARGET_EXE)) $(subst /,\,$(TARGET)) >NUL
+# Build final program directly from source files
+$(BINDIR)/violation-management-system.exe: $(SRCS) | $(BINDIR)
+	$(CC) $(CFLAGS) $(SRCS) -o $@
 
-$(TARGET_EXE): $(OBJS) | $(BINDIR)
-	$(CC) $(OBJS) -o $@
+# Compile and run seed tool to generate demo data
+seed: $(BINDIR)/seed_data.exe
 
-# Build each .o file from each .c file
-# $< = input file (.c)
-# $@ = output file (.o)
-$(BUILDDIR)/%.o: $(SRCDIR)/%.c | $(BUILDDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(BUILDDIR):
-	@if not exist $(BUILDDIR) mkdir $(BUILDDIR)
+$(BINDIR)/seed_data.exe: tools/seed_data.c | $(BINDIR)
+	$(CC) $(CFLAGS) $< -o $@
 
 $(BINDIR):
 	@if not exist $(BINDIR) mkdir $(BINDIR)
 
-# Delete build/ and bin/
+# Delete bin/
 clean:
-	@if exist $(BUILDDIR) rmdir /S /Q $(BUILDDIR)
 	@if exist $(BINDIR) rmdir /S /Q $(BINDIR)
 
-# Format all .c and .h files
-# sắp xếp / làm đẹp code tự động
+# Run clang-format on all .c and .h files
 format:
-ifeq ($(strip $(FORMAT_FILES)),)
+ifeq ($(strip $(SRCS) $(INCS)),)
 	@echo "No source or header files found to format."
 else
-	clang-format -i $(FORMAT_FILES)
+	clang-format -i $(SRCS) $(INCS)
 endif
 
 # Run clang-tidy on all .c files
-# clang-tidy = soi lỗi / cảnh báo code nâng cao
 tidy:
 ifeq ($(strip $(SRCS)),)
 	@echo "No source files found to analyze."
